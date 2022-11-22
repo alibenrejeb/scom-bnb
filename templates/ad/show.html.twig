@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ ad.title }}{% endblock %}
+
+{% block body %}
+<div class="ad-title" style="background-image: url({{ ad.coverImage }})">
+    <div class="container">
+        <h1>{{ ad.title }}</h1>
+        <p>{{ ad.introduction }}</p>
+        <p class="h2">
+            <strong>{{ ad.rooms }} chambres</strong> pour <strong>{{ ad.price }}&euro;</strong> par nuit
+        </p>
+        <a href="#" class="btn btn-primary">Réserver {{ ad.id }} !</a>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mb3">
+            {{ ad.content|raw }}
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                <div class="carousel-indicators">
+                {% for image in ad.images %}
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active" aria-current="true" {% endif %} aria-label="Slide {{ loop.index }}"></button>
+                {% endfor %}
+                </div>
+                <div class="carousel-inner">
+                {% for image in ad.images %}
+                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                        <img src="{{ image.url }}" class="d-block w-100" alt="{{ image.caption }}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>{{ ad.title }}</h5>
+                            <p>{{ image.caption }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col-4">
+                    <img src="https://via.placeholder.com/64x64" alt="Avatar d'Ali">
+                </div>
+                <div class="col">
+                    <h1>Ali Ben Rejeb</h1>
+                    <span class="badge bg-primary">3 annonces</span>
+                </div>
+            </div>
+            <p>Lorem ipsum dolor sit amet. Ea dicta quia sed minima suscipit qui maxime sunt est deserunt molestiae ex omnis error et nulla nisi eum perferendis assumenda. Ea odio quis a fugit facilis non harum repellendus eos Quis necessitatibus sit reprehenderit omnis ad consectetur harum.</p>
+            <p>Vel error modi et voluptatem provident et facilis dicta hic saepe asperiores. Qui nostrum consequatur 33 exercitationem suscipit id fugiat incidunt et ipsa illum eum repellat unde est velit animi. Ut architecto galisum rem voluptatem minus et vero suscipit eos enim odio ex consequatur quibusdam sit doloribus libero.</p>
+            <p>Quo libero fuga et quos molestias et voluptatem necessitatibus. Id itaque galisum aut veniam ullam est voluptatem consequatur nam esse voluptate quo omnis veritatis et exercitationem tempore. Et alias adipisci et enim vero qui voluptatem quod.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
