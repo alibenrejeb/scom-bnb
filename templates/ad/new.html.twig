@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Création d'une annonce{% endblock %}
+
+{# appliquer le custom theme sur ce formulaire _self #}
+{# {% form_theme form _self %} #}
+
+{% block body %}
+<div class="container">
+    <h1>Créer une nouvelle annonce</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_widget(form) }}
+
+    <button type="submit" class="btn btn-primary">Créer la nouvelle annonce</button>
+
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+
+{# custom theme #}
+{# {% block form_row %}
+<div class="form-group">
+    {{ form_label(form) }}
+    {{ form_widget(form) }}
+</div>
+{% endblock %}
+
+{% block text_widget %}
+    <input type="text" name="{{full_name}}" id="{{id}}" class="form-control">
+{% endblock %} #}
