@@ -4,6 +4,7 @@
 
 {# appliquer le custom theme sur ce formulaire _self #}
 {# {% form_theme form _self %} #}
+{% form_theme form 'ad/_collection.html.twig' %}
 
 {% block body %}
 <div class="container">
@@ -13,10 +14,16 @@
 
     {{ form_widget(form) }}
 
+    <input type="hidden" id="widget-counter" value="0">
+
     <button type="submit" class="btn btn-primary">Créer la nouvelle annonce</button>
 
     {{ form_end(form) }}
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/ad.js"></script>
 {% endblock %}
 
 {# custom theme #}
