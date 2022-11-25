@@ -92,6 +92,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $ads;
 
+    public function getFullName() {
+        return "{$this->firstname} {$this->lastname}";
+    }
+
     /**
      * Permet d'initialiser le slug
      *

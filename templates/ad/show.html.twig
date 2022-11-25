@@ -15,7 +15,7 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-8 mb3">
+        <div class="col-md-8 mb-3">
             {{ ad.content|raw }}
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
                 <div class="carousel-indicators">
@@ -45,18 +45,21 @@
             </div>
         </div>
         <div class="col">
-            <div class="row">
-                <div class="col-4">
-                    <img src="https://via.placeholder.com/64x64" alt="Avatar d'Ali">
+            {% set author = ad.author %}
+            <div class="row mb-3">
+                <div class="col-3">
+                    <a href="{{ path('app_user_index', { 'slug': author.slug }) }}">
+                        <img src="{{ author.picture }}" class="avatar avatar-medium" alt="Avatar de {{ author.fullname }}">
+                    </a>
                 </div>
                 <div class="col">
-                    <h1>Ali Ben Rejeb</h1>
-                    <span class="badge bg-primary">3 annonces</span>
+                    <a href="{{ path('app_user_index', { 'slug': author.slug }) }}">
+                        <h3>{{ author.fullname }} </h3>
+                    </a>
+                    <span class="badge bg-primary">{{ author.ads | length }} annonces</span>
                 </div>
             </div>
-            <p>Lorem ipsum dolor sit amet. Ea dicta quia sed minima suscipit qui maxime sunt est deserunt molestiae ex omnis error et nulla nisi eum perferendis assumenda. Ea odio quis a fugit facilis non harum repellendus eos Quis necessitatibus sit reprehenderit omnis ad consectetur harum.</p>
-            <p>Vel error modi et voluptatem provident et facilis dicta hic saepe asperiores. Qui nostrum consequatur 33 exercitationem suscipit id fugiat incidunt et ipsa illum eum repellat unde est velit animi. Ut architecto galisum rem voluptatem minus et vero suscipit eos enim odio ex consequatur quibusdam sit doloribus libero.</p>
-            <p>Quo libero fuga et quos molestias et voluptatem necessitatibus. Id itaque galisum aut veniam ullam est voluptatem consequatur nam esse voluptate quo omnis veritatis et exercitationem tempore. Et alias adipisci et enim vero qui voluptatem quod.</p>
+            {{ author.description | raw}}
         </div>
     </div>
 </div>

@@ -2,18 +2,19 @@
 
 namespace App\Controller;
 
-use App\Entity\PasswordUpdate;
 use App\Entity\User;
-use App\Form\PasswordUpdateType;
+use App\Form\AccountType;
+use App\Entity\PasswordUpdate;
 use App\Form\RegistrationType;
+use App\Form\PasswordUpdateType;
+use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AccountController extends AbstractController
 {
@@ -74,6 +75,35 @@ class AccountController extends AbstractController
     }
 
     /**
+     * Premet d'afficher et de traiter le formulaire de modification de profil
+     *
+     * @Route("/account/profile", name="app_account_profile")
+     *
+     * @return Response
+     */
+    public function profile(Request $request, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(AccountType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash(
+                'success',
+                'Les données du profil ont été enregistrée avec succès'
+            );
+        }
+
+        return $this->render('account/profile.html.twig',[
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * Permet de modifier le mot de passe
      *
      * @Route("/account/update-password", name="app_account_update_password")
@@ -119,6 +149,20 @@ class AccountController extends AbstractController
 
         return $this->render('account/update-password.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * Permet d'afficher le profil de l'utilisateur connecté
+     *
+     * @Route("/account", name="app_account")
+     *
+     * @return Response
+     */
+    public function myAccount(): Response
+    {
+        return $this->render('user/index.html.twig', [
+            'user' => $this->getUser()
         ]);
     }
 
