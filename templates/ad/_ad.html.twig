@@ -16,6 +16,9 @@
             </h4>
             <p class="card-text">{{ ad.introduction }}</p>
             <a class="btn btn-secondary" href="{{ url }}">En savoir plus</a>
+            {% if app.user and app.user == ad.author %}
+            <a href="{{ path('app_ads_edit', {'slug': ad.slug}) }}" class="btn btn-warning">Modifier l'annonce</a>
+            {% endif %}
         </div>
     </div>
 </div>

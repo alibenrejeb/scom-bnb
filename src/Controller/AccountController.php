@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -79,6 +80,8 @@ class AccountController extends AbstractController
      *
      * @Route("/account/profile", name="app_account_profile")
      *
+     * @Security("is_granted('ROLE_USER')")
+     *
      * @return Response
      */
     public function profile(Request $request, EntityManagerInterface $em): Response
@@ -107,6 +110,8 @@ class AccountController extends AbstractController
      * Permet de modifier le mot de passe
      *
      * @Route("/account/update-password", name="app_account_update_password")
+     *
+     * @Security("is_granted('ROLE_USER')")
      *
      * @return Response
      */
@@ -156,6 +161,8 @@ class AccountController extends AbstractController
      * Permet d'afficher le profil de l'utilisateur connecté
      *
      * @Route("/account", name="app_account")
+     *
+     * @Security("is_granted('ROLE_USER')")
      *
      * @return Response
      */

@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Ad;
 use Faker\Factory;
 use App\Entity\Image;
+use App\Entity\Role;
 use App\Entity\User;
 use Mmo\Faker\PicsumProvider;
 use Doctrine\Persistence\ObjectManager;
@@ -24,6 +25,21 @@ class AppFixtures extends Fixture
     {
         $faker = Factory::create('FR-fr');
         $faker->addProvider(new PicsumProvider($faker));
+        $adminRole = new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        $adminUser = new User();
+        $adminUser->setFirstname('Jad')
+            ->setLastname('Ben Rejeb')
+            ->setEmail('jbenrejeb@gmail.com')
+            ->setPassword($this->hasher->hashPassword($adminUser, 'Admin01!'))
+            ->setPicture('https://randomuser.me/api/portraits/lego/5.jpg')
+            ->setIntroduction($faker->sentence())
+            ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(3)) . '</p>')
+            ->addUserRole($adminRole);
+        $manager->persist($adminRole);
+
         // Nous gérons les utilisateurs
         $users = [];
         $genres = ['male', 'female'];
