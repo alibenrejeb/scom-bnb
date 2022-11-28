@@ -174,6 +174,20 @@ class AccountController extends AbstractController
     }
 
     /**
+     * Permet d'afficher la liste des réservations faites par l'utilisateur
+     *
+     * @Route("/account/bookings", name="app_account_bookings")
+     *
+     * @Security("is_granted('ROLE_USER')")
+     *
+     * @return Response
+     */
+    public function bookings(): Response
+    {
+        return $this->render('account/bookings.html.twig');
+    }
+
+    /**
      * Permet de se déconnecter
      *
      * @Route("/logout", name="app_account_logout")
