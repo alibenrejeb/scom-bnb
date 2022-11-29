@@ -39,7 +39,7 @@
                         <dt class="col-md-4">Montant total</dt>
                         <dd class="col-md-8">{{booking.amount}} &euro;</dd>
                         <dt class="col-md-4">Commentaire</dt>
-                        <dd class="col-md-8">{{booking.comment}}</dd>
+                        <dd class="col-md-8">{{booking.comment | default('Aucun commentaire')}}</dd>
                     </dl>
                     <hr>
                     <h2 class="alert-heading">Votre hôte</h2>
@@ -57,12 +57,31 @@
                     {{author.description | raw}}
                     <a href="{{ path('app_user_index', {'slug': author.slug}) }}" class="btn btn-primary">Plus d'infos sur {{author.firstname}}</a>
                 </div>
+                <div class="alert alert-light" id="comment">
+                    <h2 class="alert-heading">Votre avis compte</h2>
+                    {% if date() > date(booking.endDate) %}
+                        {% set comment = booking.ad.commentFromAuthor(app.user) %}
+                        {% if comment is not null %}
+                            <blockquote>
+                                {{ comment.content }}
+                            </blockquote>
+                            <strong>Note: </strong> {% include "partials/rating.html.twig" with {'rating': comment.rating} %}
+                        {% else %}
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            <button type="submit" class="btn btn-success">Confirmer</button>
+                            {{ form_end(form) }}
+                        {% endif %}
+                    {% else %}
+                        <p>Vous ne pourrez pas noter cette annonce tant que votre voyage ne sera pas complet</p>
+                    {% endif %}
+                </div>
             </div>
             <div class="col">
                 <div class="alert alert-light">
                     <h2 class="alert-heading">Votre hébergement</h2>
                     <h4>
-                        <a href="{{ path('app_ads_show', {'slug': author.slug}) }}">{{ad.title}}</a>
+                        <a href="{{ path('app_ads_show', {'slug': ad.slug}) }}">{{ad.title}}</a>
                     </h4>
                     <img src="{{ad.coverImage}}" alt="" class="img-fluid mb-3" alt="Image de {{ad.title}}" />
                     {{ad.content | raw }}
