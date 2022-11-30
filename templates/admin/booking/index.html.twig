@@ -1,0 +1,47 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des réservations{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <h2 class="my-5">Administration des réservations</h2>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Visiteur</th>
+                <th>Annonce</th>
+                <th class="text-center">Durée</th>
+                <th class="text-center">Montant</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{booking.id}}</td>
+                <td>{{booking.createdAt|date('d/m/Y H:i')}}</td>
+                <td>
+                    <img src="{{booking.booker.picture}}" alt="Photo de {{booking.booker.firstname}}" class="avatar avatar-micro me-2">
+                    {{booking.booker.fullname}}
+                </td>
+                <td>{{booking.ad.title}}</td>
+                <td class="text-center">
+                    <span class="badge bg-secondary">
+                        {{booking.duration}}
+                    </span>
+                </td>
+                <td class="text-center">
+                    {{booking.amount | number_format(2, '.', ' ')}} &euro;
+                </td>
+                <td class="text-center">
+                    <a href="{{ path('app_admin_bookings_edit', {'id': booking.id}) }}" class="text-primary"><i class="fas fa-edit"></i></a>
+                    <a href="{{ path('app_admin_bookings_delete', {'id': booking.id}) }}" class="text-danger"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
