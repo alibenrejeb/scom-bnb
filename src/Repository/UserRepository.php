@@ -35,6 +35,15 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findUsersNotAdmin()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.id != :userId')
+            ->setParameter('userId', 1)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function add(User $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);

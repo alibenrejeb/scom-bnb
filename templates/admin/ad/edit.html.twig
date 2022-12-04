@@ -45,7 +45,7 @@
                                 <td>{{booking.booker.fullname}}</td>
                                 <td>{{booking.createdAt | date('d/m/Y H:i')}}</td>
                                 <td>
-                                    <a href="#" class="text-primary">
+                                    <a href="{{ path('app_admin_bookings_edit', {'id': booking.id}) }}" class="text-primary">
                                         <i class="fas fa-pencil"></i>
                                     </a>
                                 </td>
@@ -79,7 +79,7 @@
                                 <td>{{comment.rating}}</td>
                                 <td>{{comment.content}}</td>
                                 <td>
-                                    <a href="#" class="text-primary">
+                                    <a href="{{ path('app_admin_comments_edit', {'id': comment.id}) }}" class="text-primary">
                                         <i class="fas fa-pencil"></i>
                                     </a>
                                 </td>

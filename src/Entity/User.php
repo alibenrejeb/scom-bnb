@@ -274,7 +274,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles = $this->userRoles->map(function($role) {
             return $role->getTitle();
         })->toArray();
-        return array_merge($roles, ['ROLE_USER']);
+        return array_unique(array_merge($roles, ['ROLE_USER']));
     }
 
     /**
@@ -400,5 +400,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function getHigherRole(): string
+    {
+        $roles = $this->userRoles->map(function($role) {
+            return $role->getTitle();
+        });
+
+        if ($roles->contains('ROLE_SUPER_ADMIN')) {
+            return 'ROLE_SUPER_ADMIN';
+        }
+
+        if ($roles->contains('ROLE_ADMIN')) {
+            return 'ROLE_ADMIN';
+        }
+
+        return 'ROLE_USER';
     }
 }
